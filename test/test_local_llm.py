@@ -9,6 +9,10 @@ def main():
     logging.debug("test_local_llm.main()")
 
     llm = local_llm.zephyr_7b_alpha()
+    question = "What is the mass of Jupiter?"
+    response = llm.stream_complete(question)
+    for word in response:
+        print(word.delta, end="", flush=True)
 
 
 if __name__ == '__main__':
