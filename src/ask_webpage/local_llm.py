@@ -1,6 +1,7 @@
 from llama_index.llms import HuggingFaceLLM
 from transformers import BitsAndBytesConfig
 from llama_index.prompts import PromptTemplate
+import torch
 
 def zephyr_7b_alpha(context_window=2048, max_new_tokens=256):
     query_wrapper_prompt = PromptTemplate("<|system|>\n</s>\n<|user|>\n{query_str}</s>\n<|assistant|>\n")
