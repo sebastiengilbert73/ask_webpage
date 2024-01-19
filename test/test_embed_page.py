@@ -18,7 +18,7 @@ def main():
     logging.info("test_embed_page.main()")
 
 
-    planets = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']:
+    planets = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']
     urls = [f"https://en.wikipedia.org/wiki/{planet}_(planet)" for planet in planets]
     documents = webpage.WebpageData(urls)
 
