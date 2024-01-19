@@ -31,6 +31,7 @@ def main():
         chunk_overlap=128
     )
 
+    vs_index = None
     if db_name not in [c.name for c in db.list_collections()]:  # Create the index
         logging.info(f"Building the index {db_name}...")
         planets = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']
@@ -56,6 +57,7 @@ def main():
             service_context=service_context
         )
 
+    return vs_index
 
 if __name__ == '__main__':
     main()
