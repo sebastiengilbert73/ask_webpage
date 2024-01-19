@@ -1,5 +1,6 @@
 import logging
 __import__('pysqlite3')  # https://gist.github.com/defulmere/8b9695e415a44271061cc8e272f3c300
+# Requires pip install pysqlite3-binary
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 import chromadb
@@ -20,7 +21,8 @@ def main():
 
     planets = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']
     urls = [f"https://en.wikipedia.org/wiki/{planet}_(planet)" for planet in planets]
-    documents = webpage.WebpageData(urls)
+    webpage_extractor = webpage.WebpageData(urls)
+    documents = webpage_extractor.documents
 
 
     llm = local_llm.zephyr_7b_alpha()
