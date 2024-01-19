@@ -18,13 +18,6 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)-15s %(levelname)s \t
 def main():
     logging.info("test_embed_page.main()")
 
-
-    planets = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']
-    urls = [f"https://en.wikipedia.org/wiki/{planet}_(planet)" for planet in planets]
-    webpage_extractor = webpage.WebpageData(urls)
-    documents = webpage_extractor.documents
-
-
     llm = local_llm.zephyr_7b_alpha()
     embedder = local_embedder.bge_small_en_v1p5()
 
@@ -35,6 +28,11 @@ def main():
 
     if db_name not in [c.name for c in db.list_collections()]:  # Create the index
         logging.info(f"Building the index {db_name}...")
+        planets = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']
+        urls = [f"https://en.wikipedia.org/wiki/{planet}_(planet)" for planet in planets]
+        webpage_extractor = webpage.WebpageData(urls)
+        documents = webpage_extractor.documents
+
         chroma_collection = db.create_collection(db_name)
         vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
         storage_context = StorageContext.from_defaults(vector_store=vector_store)
