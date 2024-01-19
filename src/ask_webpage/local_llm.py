@@ -3,6 +3,25 @@ from transformers import BitsAndBytesConfig
 from llama_index.prompts import PromptTemplate
 import torch
 
+def messages_to_prompt(messages):  # CF. https://colab.research.google.com/drive/16Ygf2IyGNkb725ZqtRmFQjwWBuzFX_kl?usp=sharing#scrollTo=lMNaHDzPM68f
+  prompt = ""
+  for message in messages:
+    if message.role == 'system':
+      prompt += f"<|system|>\n{message.content}</s>\n"
+    elif message.role == 'user':
+      prompt += f"<|user|>\n{message.content}</s>\n"
+    elif message.role == 'assistant':
+      prompt += f"<|assistant|>\n{message.content}</s>\n"
+
+  # ensure we start with a system prompt, insert blank if needed
+  if not prompt.startswith("<|system|>\n"):
+    prompt = "<|system|>\n</s>\n" + prompt
+
+  # add final assistant prompt
+  prompt = prompt + "<|assistant|>\n"
+
+  return prompt
+
 def zephyr_7b_alpha(context_window=2048, max_new_tokens=256):
     query_wrapper_prompt = PromptTemplate("<|system|>\n</s>\n<|user|>\n{query_str}</s>\n<|assistant|>\n")
     quantization_config = BitsAndBytesConfig(
