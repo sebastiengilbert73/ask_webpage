@@ -24,7 +24,12 @@ def main():
     db_directory = "./chroma_db"
     db_name = "planets"
     db = chromadb.PersistentClient(path=db_directory)
-    service_context = ServiceContext.from_defaults(llm=llm, embed_model=embedder)
+    service_context = ServiceContext.from_defaults(
+        llm=llm,
+        embed_model=embedder,
+        chunk_size=512,
+        chunk_overlap=128
+    )
 
     if db_name not in [c.name for c in db.list_collections()]:  # Create the index
         logging.info(f"Building the index {db_name}...")
