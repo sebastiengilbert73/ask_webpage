@@ -1,7 +1,8 @@
 from llama_index.llms import HuggingFaceLLM
-from transformers import BitsAndBytesConfig
 from llama_index.prompts import PromptTemplate
 import torch
+from transformers import BitsAndBytesConfig
+
 
 def messages_to_prompt(messages):  # CF. https://colab.research.google.com/drive/16Ygf2IyGNkb725ZqtRmFQjwWBuzFX_kl?usp=sharing#scrollTo=lMNaHDzPM68f
   prompt = ""
@@ -24,12 +25,15 @@ def messages_to_prompt(messages):  # CF. https://colab.research.google.com/drive
 
 def zephyr_7b_alpha(context_window=2048, max_new_tokens=256):
     query_wrapper_prompt = PromptTemplate("<|system|>\n</s>\n<|user|>\n{query_str}</s>\n<|assistant|>\n")
+    model_kwargs = {"trust_remote_code": True}
     quantization_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_compute_dtype=torch.float16,
         bnb_4bit_quant_type="nf4",
         bnb_4bit_use_double_quant=True,
     )
+    model_kwargs['quantization_config'] = quantization_config
+
     llm = HuggingFaceLLM(
         model_name="HuggingFaceH4/zephyr-7b-alpha",
         tokenizer_name="HuggingFaceH4/zephyr-7b-alpha",
