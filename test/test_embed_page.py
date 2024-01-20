@@ -1,8 +1,10 @@
 import logging
-__import__('pysqlite3')  # https://gist.github.com/defulmere/8b9695e415a44271061cc8e272f3c300
-# Requires pip install pysqlite3-binary
 import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+import platform
+if not 'windows' in platform.system().lower():
+    __import__('pysqlite3')  # https://gist.github.com/defulmere/8b9695e415a44271061cc8e272f3c300
+    # Requires pip install pysqlite3-binary
+    sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 import chromadb
 
 from llama_index import VectorStoreIndex, ServiceContext, StorageContext
