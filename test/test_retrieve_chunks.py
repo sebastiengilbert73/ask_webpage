@@ -9,7 +9,13 @@ def main():
     vs_index = test_embed_page.main()  # Returns a VectorSroreIndex
 
     ret = vs_index.as_retriever(similarity_top_k=5)
-    query_engine = vs_index.as_query_engine(similarity_top_k=5)
+    nodes = ret.retrieve("How many moons does Saturn have?")
+    logging.info(f"len(nodes) = {len(nodes)}")
+    for node in nodes:
+        print(node.text)
+        print(f"len(node.text) = {len(node.text)}\n")
+
+    return nodes
 
 
 if __name__ == '__main__':
