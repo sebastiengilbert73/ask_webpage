@@ -38,9 +38,11 @@ def search_website(website_url, query):
     webpage_extractor = webpage.WebpageData([website_url])
     documents = webpage_extractor.documents
 
+    db_name = "".join([c if c.isalnum() else "" for c in website_url])
+    db_name = db_name[: 63]
     db = chromadb.Client()
-    if website_url not in [c.name for c in db.list_collections()]:  # Create db
-        chroma_collection = db.create_collection(website_url)
+    if db_name not in [c.name for c in db.list_collections()]:  # Create db
+        chroma_collection = db.create_collection(db_name)
         vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
         storage_context = StorageContext.from_defaults(vector_store=vector_store)
         vs_index = VectorStoreIndex.from_documents(
@@ -50,7 +52,7 @@ def search_website(website_url, query):
             show_progress=True
         )
     else:  # db already exists
-        chroma_collection = db.get_collection(website_url)
+        chroma_collection = db.get_collection(db_name)
         vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
         vs_index = VectorStoreIndex.from_vector_store(
             vector_store=vector_store,
