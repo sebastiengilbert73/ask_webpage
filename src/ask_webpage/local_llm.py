@@ -1,5 +1,6 @@
 from llama_index.llms import HuggingFaceLLM
-from llama_index.prompts import PromptTemplate, SimpleInputPrompt
+from llama_index.prompts import PromptTemplate
+from llama_index.prompts.promts import SimpleInputPrompt
 import torch
 from transformers import BitsAndBytesConfig
 
