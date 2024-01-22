@@ -74,7 +74,7 @@ def llama2_7b(context_window=4096, max_new_tokens=2048, temperature=0.0):  # Cf.
     )
     return llm
 
-def phi2(context_window=4096, max_new_tokens=256, temperature=0.0, device_map='cuda'):  # Cf. https://gist.github.com/reachrkr/250eaf10b6252b6a936d9abcb67efcca
+def phi2(context_window=4096, max_new_tokens=256, device_map='cuda'):  # Cf. https://gist.github.com/reachrkr/250eaf10b6252b6a936d9abcb67efcca
     system_prompt = "You are a Q&A assistant. Your goal is to answer questions as accurately as possible based on the instructions and context provided."
     query_wrapper_prompt = PromptTemplate(
         "<|USER|>{query_str}<|ASSISTANT|>"
@@ -82,7 +82,7 @@ def phi2(context_window=4096, max_new_tokens=256, temperature=0.0, device_map='c
     llm = HuggingFaceLLM(
         context_window=context_window,
         max_new_tokens=max_new_tokens,
-        generate_kwargs={"temperature": temperature, "do_sample": False},
+        generate_kwargs={"do_sample": False},
         system_prompt=system_prompt,
         query_wrapper_prompt=query_wrapper_prompt,
         tokenizer_name="microsoft/phi-2",
