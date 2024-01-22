@@ -10,6 +10,7 @@ if not 'windows' in platform.system().lower():
     # Requires pip install pysqlite3-binary
     sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 import chromadb
+from llama_index import VectorStoreIndex, ServiceContext, StorageContext
 from llama_index.vector_stores import ChromaVectorStore
 import logging
 
