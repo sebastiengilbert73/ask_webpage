@@ -98,11 +98,5 @@ def phi2(context_window=4096, max_new_tokens=256, device_map='cuda'):  # Cf. htt
         # tokenizer_kwargs={},
         messages_to_prompt=messages_to_prompt,
         device_map=device_map
-        """tokenizer_name="microsoft/phi-2",
-        model_name="microsoft/phi-2",
-        device_map=device_map,
-        # uncomment this if using CUDA to reduce memory usage
-        model_kwargs={"torch_dtype": torch.bfloat16}
-        """
     )
     return llm
