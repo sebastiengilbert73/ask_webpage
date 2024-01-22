@@ -47,7 +47,7 @@ def search_website(website_url, query):
     nodes = ret.retrieve(query)
     logging.info(f"len(nodes) = {len(nodes)}")
     for node in nodes:
-        logging(f"{node.text}\n\n ++++++++++++++++")
+        logging.info(f"{node.text}\n\n ++++++++++++++++")
 
     qa_prompt = PromptTemplate(
         """\
