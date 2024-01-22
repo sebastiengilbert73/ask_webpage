@@ -6,7 +6,7 @@ import local_llm
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)-15s %(levelname)s \t%(message)s')
 
 def main():
-    logging.debug("test_local_llm.main()")
+    logging.debug("test_local_llama2.main()")
 
     llm = local_llm.llama2_7b()
     question = "What is the mass of Jupiter?"
