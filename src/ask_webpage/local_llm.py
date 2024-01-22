@@ -1,5 +1,5 @@
 from llama_index.llms import HuggingFaceLLM
-from llama_index.prompts import PromptTemplate
+from llama_index.prompts import PromptTemplate, SimpleInputPrompt
 import torch
 from transformers import BitsAndBytesConfig
 
@@ -76,7 +76,7 @@ def llama2_7b(context_window=4096, max_new_tokens=2048, temperature=0.0):  # Cf.
 
 def phi2(context_window=4096, max_new_tokens=256, device_map='cuda'):  # Cf. https://gist.github.com/reachrkr/250eaf10b6252b6a936d9abcb67efcca
     system_prompt = "You are a Q&A assistant. Your goal is to answer questions as accurately as possible based on the instructions and context provided."
-    query_wrapper_prompt = PromptTemplate(
+    query_wrapper_prompt = SimpleInputPrompt(
         "<|USER|>{query_str}<|ASSISTANT|>"
     )
     llm = HuggingFaceLLM(
