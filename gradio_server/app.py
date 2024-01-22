@@ -4,6 +4,7 @@ sys.path.append("../src/ask_webpage")
 import local_llm
 import webpage
 import local_embedder
+import platform
 if not 'windows' in platform.system().lower():
     __import__('pysqlite3')  # https://gist.github.com/defulmere/8b9695e415a44271061cc8e272f3c300
     # Requires pip install pysqlite3-binary
