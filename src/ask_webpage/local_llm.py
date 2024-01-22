@@ -91,3 +91,4 @@ def phi2(context_window=4096, max_new_tokens=256, temperature=0.0, device_map='c
         # uncomment this if using CUDA to reduce memory usage
         model_kwargs={"torch_dtype": torch.bfloat16}
     )
+    return llm
