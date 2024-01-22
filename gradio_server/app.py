@@ -69,7 +69,7 @@ def search_website(website_url, query):
 
 demo = gr.Interface(
     fn=search_website,
-    inputs=["text", "test"],
+    inputs=["text", "text"],
     outputs=["text"]
 )
 
