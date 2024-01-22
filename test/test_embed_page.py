@@ -59,7 +59,7 @@ def main():
             service_context=service_context
         )
 
-    return vs_index
+    return vs_index, llm
 
 if __name__ == '__main__':
     main()
