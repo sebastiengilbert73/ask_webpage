@@ -12,6 +12,7 @@ if not 'windows' in platform.system().lower():
 import chromadb
 from llama_index import VectorStoreIndex, ServiceContext, StorageContext
 from llama_index.vector_stores import ChromaVectorStore
+from llama_index.prompts import PromptTemplate
 import logging
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)-15s %(levelname)s \t%(message)s')
@@ -25,6 +26,13 @@ service_context = ServiceContext.from_defaults(
         chunk_overlap=128
     )
 
+def generate_response(retrieved_nodes, query_str, qa_prompt, llm):
+    context_str = "\n\n".join([r.get_content() for r in retrieved_nodes])
+    fmt_qa_prompt = qa_prompt.format(
+        context_str=context_str, query_str=query_str
+    )
+    response = llm.complete(fmt_qa_prompt)
+    return str(response), fmt_qa_prompt
 
 def search_website(website_url, query):
     webpage_extractor = webpage.WebpageData([website_url])
