@@ -80,16 +80,29 @@ def phi2(context_window=4096, max_new_tokens=256, device_map='cuda'):  # Cf. htt
     query_wrapper_prompt = SimpleInputPrompt(
         "<|USER|>{query_str}<|ASSISTANT|>"
     )
+    model_kwargs = {"trust_remote_code": True}
+    quantization_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_compute_dtype=torch.float16,
+        bnb_4bit_quant_type="nf4",
+        bnb_4bit_use_double_quant=True,
+    )
+    model_kwargs['quantization_config'] = quantization_config
     llm = HuggingFaceLLM(
         context_window=context_window,
         max_new_tokens=max_new_tokens,
         generate_kwargs={"do_sample": False},
         system_prompt=system_prompt,
         query_wrapper_prompt=query_wrapper_prompt,
-        tokenizer_name="microsoft/phi-2",
+        model_kwargs=model_kwargs,
+        # tokenizer_kwargs={},
+        messages_to_prompt=messages_to_prompt,
+        device_map=device_map
+        """tokenizer_name="microsoft/phi-2",
         model_name="microsoft/phi-2",
         device_map=device_map,
         # uncomment this if using CUDA to reduce memory usage
         model_kwargs={"torch_dtype": torch.bfloat16}
+        """
     )
     return llm
