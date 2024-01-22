@@ -41,7 +41,7 @@ def zephyr_7b_alpha(context_window=2048, max_new_tokens=256):
         query_wrapper_prompt=query_wrapper_prompt,
         context_window=context_window,
         max_new_tokens=max_new_tokens,
-        model_kwargs={"quantization_config": quantization_config, "trust_remote_code": True},
+        model_kwargs=model_kwargs,
         # tokenizer_kwargs={},
         generate_kwargs={"do_sample": False},
         messages_to_prompt=messages_to_prompt,
