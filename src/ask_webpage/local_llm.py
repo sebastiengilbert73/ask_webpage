@@ -48,3 +48,28 @@ def zephyr_7b_alpha(context_window=2048, max_new_tokens=256):
     )
 
     return llm
+
+def llama2_7b(context_window=4096, max_new_tokens=2048, temperature=0.0):  # Cf. https://docs.llamaindex.ai/en/stable/examples/vector_stores/SimpleIndexDemoLlama-Local.html
+    SYSTEM_PROMPT = """You are an AI assistant that answers questions in a friendly manner, based on the given source documents. Here are some rules you always follow:
+    - Generate human readable output, avoid creating output with gibberish text.
+    - Generate only the requested output, don't include any other language before or after the requested output.
+    - Never say thank you, that you are happy to help, that you are an AI agent, etc. Just answer directly.
+    - Generate professional language typically used in business documents in North America.
+    - Never generate offensive or foul language.
+    """
+    query_wrapper_prompt = PromptTemplate(
+        "[INST]<<SYS>>\n" + SYSTEM_PROMPT + "<</SYS>>\n\n{query_str}[/INST] "
+    )
+
+    llm = HuggingFaceLLM(
+        context_window=context_window,
+        max_new_tokens=max_new_tokens,
+        generate_kwargs={"temperature": temperature, "do_sample": False},
+        query_wrapper_prompt=query_wrapper_prompt,
+        tokenizer_name="meta-llama/Llama-2-7b-hf",
+        model_name="meta-llama/Llama-2-7b-hf",
+        device_map="auto",
+        # change these settings below depending on your GPU
+        model_kwargs={"torch_dtype": torch.float16, "load_in_8bit": True},
+    )
+    return llm
