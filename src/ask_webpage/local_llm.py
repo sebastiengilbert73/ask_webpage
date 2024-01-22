@@ -74,7 +74,7 @@ def llama2_7b(context_window=4096, max_new_tokens=2048, temperature=0.0):  # Cf.
     )
     return llm
 
-def phi2(context_window=4096, max_new_tokens=256, temperature=0.0):  # Cf. https://gist.github.com/reachrkr/250eaf10b6252b6a936d9abcb67efcca
+def phi2(context_window=4096, max_new_tokens=256, temperature=0.0, device_map='cuda'):  # Cf. https://gist.github.com/reachrkr/250eaf10b6252b6a936d9abcb67efcca
     system_prompt = "You are a Q&A assistant. Your goal is to answer questions as accurately as possible based on the instructions and context provided."
     query_wrapper_prompt = PromptTemplate(
         "<|USER|>{query_str}<|ASSISTANT|>"
@@ -87,7 +87,7 @@ def phi2(context_window=4096, max_new_tokens=256, temperature=0.0):  # Cf. https
         query_wrapper_prompt=query_wrapper_prompt,
         tokenizer_name="microsoft/phi-2",
         model_name="microsoft/phi-2",
-        device_map="auto",
+        device_map=device_map,
         # uncomment this if using CUDA to reduce memory usage
         model_kwargs={"torch_dtype": torch.bfloat16}
     )
