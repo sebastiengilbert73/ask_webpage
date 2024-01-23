@@ -11,10 +11,10 @@ def main():
     ret = vs_index.as_retriever(similarity_top_k=5)
     query = "How many moons does Saturn have?"
     nodes = ret.retrieve(query)
-    logging.info(f"len(nodes) = {len(nodes)}")
     for node in nodes:
         print(node.text)
         print(f"len(node.text) = {len(node.text)}\n")
+    logging.info(f"len(nodes) = {len(nodes)}")
 
     return nodes, llm, query
 
