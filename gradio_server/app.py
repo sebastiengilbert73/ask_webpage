@@ -88,7 +88,8 @@ demo = gr.Interface(
     fn=search_website,
     inputs=["text", "text"],
     outputs=["text"],
-    examples=[["https://en.wikipedia.org/wiki/Neptune", "How was the existence of Neptune first established?"]]
+    examples=[["https://en.wikipedia.org/wiki/Neptune", "How was the existence of Neptune first established?"]],
+    title="Ask a webpage"
 )
 
 demo.launch(server_name="0.0.0.0", server_port=7860)
