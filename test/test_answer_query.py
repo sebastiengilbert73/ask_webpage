@@ -33,6 +33,6 @@ def main():
     response, fmt_qa_prompt = generate_response(nodes, query, qa_prompt, llm)
     logging.info(f"***** Formatted Prompt: *****\n{fmt_qa_prompt}\n\n")
     logging.info(f"***** Response: *****\n{response}\n\n")
-    
+
 if __name__ == '__main__':
     main()
